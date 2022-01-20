@@ -11,12 +11,16 @@ public class MarkdownParse {
         // the next )
         int currentIndex = 0;
         while(currentIndex < markdown.length()) {
-            //Print
+           /* //Print
             System.out.println ("This is the markdown length: " + markdown.length());
-            System.out.println ("This is the current index: " + currentIndex);
+            System.out.println ("This is the current index: " + currentIndex); 
+            */
 
             int nextOpenBracket = markdown.indexOf("[", currentIndex);
-            int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
+            if (nextOpenBracket == -1) {
+                return toReturn;
+            }
+            int nextCloseBracket = markdown.indexOf("]", nextOpenBracket); // if remove nextOpenBracket ("]") => infinite loop, because the currentIndex never get updated to the end of the file => it's always < the length. 
             int openParen = markdown.indexOf("(", nextCloseBracket);
             int closeParen = markdown.indexOf(")", openParen);
             toReturn.add(markdown.substring(openParen + 1, closeParen));

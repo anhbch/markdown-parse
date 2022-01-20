@@ -17,12 +17,12 @@ public class MarkdownParse {
             */
 
             int nextOpenBracket = markdown.indexOf("[", currentIndex);
-            if (nextOpenBracket == -1) {
-                return toReturn;
-            }
             int nextCloseBracket = markdown.indexOf("]", nextOpenBracket); // if remove nextOpenBracket ("]") => infinite loop, because the currentIndex never get updated to the end of the file => it's always < the length. 
             int openParen = markdown.indexOf("(", nextCloseBracket);
             int closeParen = markdown.indexOf(")", openParen);
+            if (nextOpenBracket == -1 || nextCloseBracket == -1 || openParen == -1 || closeParen == -1) {
+                return toReturn; // return empty array list
+            }
             toReturn.add(markdown.substring(openParen + 1, closeParen));
             currentIndex = closeParen + 1;
         }
@@ -35,3 +35,8 @@ public class MarkdownParse {
         System.out.println(links);
     }
 }
+
+
+/*  if (nextOpenBracket == -1) {
+        return toReturn; // return empty array list
+    }*/
